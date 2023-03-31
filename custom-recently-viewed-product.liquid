@@ -1,0 +1,110 @@
+<!-- custom recently viewed product -->
+<div class="container-fluid bg-full gray-bg">
+  <div style="{% if section.settings.padding_top != blank %}padding-top: {{section.settings.padding_top}}px;{%endif%} {% if section.settings.padding_bottom != blank %}padding-bottom: {{section.settings.padding_bottom}}px;{% endif %}">
+    <div class="recentlyViewed-wrap">
+      {% if section.settings.title != blank %}
+        <div class="row heading-content">
+          <div class="col-12 text-center">
+            <h2 class="title-text animate-text">{{ section.settings.title }}</h2>
+            <small class="subtitle-text">{{ section.settings.sub_title }}</small>
+          </div>
+        </div><!-- heading-content -->
+      {% endif %}
+
+      <div id="removeRecentProduct" class="btn btn-text clearlog-btn">Clear all</div>
+      <div class="recentlyViewed-module">
+        <div id="recently-viewed-wrapper" class="row"></div>
+      </div><!-- recentlyViewed-module -->
+      
+    </div><!-- recentlyViewed-wrap -->
+  </div>
+</div>
+<!-- custom recently viewed product end -->
+
+{% schema %}
+{
+  "name":"Custom.Recently Viewed",
+  "settings":[
+    {
+      "type": "header",
+      "content": "Category Header"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Header Title",
+      "info": "Leave it blank if you want to hidden header part"
+    },
+    {
+      "type": "text",
+      "id": "sub_title",
+      "label": "Header Sub Title"
+    },
+    {
+      "type": "collection",
+      "id": "selected_collection",
+      "label": "Selected Collection"
+    },
+    {
+      "type": "header",
+      "content": "Display Section"
+    },
+    {
+      "type": "text",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "info": "Defined in pixels. Do not add the 'px' unit."
+    },
+    {
+      "type": "text",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "info": "Defined in pixels. Do not add the 'px' unit."
+    }
+  ],
+  "presets":[
+    {
+      "name":"Custom.Recently Viewed",
+      "category":"Products",
+      "settings":{}
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+<script>
+$(function() {
+  // Check all data is ready and insert to target div
+  if ($("#recently-viewed-wrapper").length > 0) {
+    console.log($("#recently-viewed-wrapper").length);
+    console.log("REALLY ?");
+    $.each(getRecentProducts(), function(index, item) {
+      $('#recently-viewed-wrapper').append(item.grid_item);
+    });
+  }
+  
+  Shopify.shop_name = Shopify.shop.split('.')[0]
+  Shopify.recentProductHistoryMax = 10;
+  Shopify.recentProductsKey = Shopify.shop_name+'.products.recent_products';
+  
+  // Get Recent data from local storage
+  function getRecentProducts() {
+    var existingValue = window.localStorage.getItem(Shopify.recentProductsKey);
+    if (existingValue) {
+      try {
+        return JSON.parse(existingValue);
+      } catch (error) {}
+    }return [];
+  };
+  
+  // Remove the item from localStorage
+  $('#removeRecentProduct').on('click', function() {
+    localStorage.removeItem(Shopify.recentProductsKey);
+    location.reload();
+  });
+  
+});
+</script>
