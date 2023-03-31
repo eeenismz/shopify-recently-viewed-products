@@ -1,0 +1,14 @@
+<!-- ESTAINS WAS HERE -- RECENTLY VIEWED PRODUCTS / CAPTURED DATA PRODUCT -->
+
+{%- capture grid_item -%}
+<div class="col-xl-2 col-md-3 col-6">{% include 'custom-product-grid' %}</div>
+{%- endcapture -%}
+
+<div class="product-recently-viewed" 
+  data-title="{{ product.title }}"
+  data-id="{{ product.id }}"
+  data-section-type="recently-viewed"
+  data-grid-item= "{{ grid_item | replace: 'ProductImage','RecentProductImage' | escape }}" hidden >
+</div>
+
+<!-- ESTAINS WAS HERE -- RECENTLY VIEWED PRODUCTS / CAPTURED DATA PRODUCT - END -->
