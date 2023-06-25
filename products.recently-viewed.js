@@ -1,5 +1,5 @@
 Shopify.shop_name = Shopify.shop.split('.')[0]
-Shopify.recentProductHistoryMax = 10;
+Shopify.recentProductHistoryMax = 3; //If you want to display 4 items, Change max number to 3.[itemmax-1]
 Shopify.recentProductsKey = Shopify.shop_name+'.products.recent_products';
 
 Shopify.RecentlyViewed = (function() {
