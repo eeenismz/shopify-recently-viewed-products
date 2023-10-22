@@ -1,7 +1,21 @@
 <!-- ESTAINS WAS HERE - RECENTLY VIEWED PRODUCTS / CAPTURED DATA PRODUCT -->
 
 {%- capture grid_item -%}
-<div class="col-xl-2 col-md-3 col-6">{% include 'custom-product-grid' %}</div>
+<div class="col-lg-3 col-md-3 col-6">
+  <div class="product-item product-list-{{ product.id }}">
+    <div class="media">
+      <a class="product-image" href="{{ product.url }}" >
+        <div class="img-bg" style="background-image: url({{ product | img_url: 'x250' }});"></div>
+      </a>
+      <div class="media-body align-self-left">
+      <a href="{{ product.url }}">
+        <h6>{{ product.title }}</h6>
+      </a>
+        <h4>{{ product.price | money }}</h4>
+      </div>
+    </div>
+  </div><!-- product-item -->
+</div>
 {%- endcapture -%}
 
 <div class="product-recently-viewed" 
